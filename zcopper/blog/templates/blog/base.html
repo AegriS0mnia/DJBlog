@@ -1,9 +1,12 @@
+{%  load static %}
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>!</title>
+        <link rel="stylesheet"  type="text/css" href="{% static 'blog/css/styles.css' %}">
+    </head>
+    {%block mainmenu%}
     <header>
         <div align="center">
             <nav>
@@ -13,12 +16,10 @@
             </nav>
         </div>
     </header>
+    {% endblock mainmenu %}
     <body>
-        {% block mainmenu %}
-
-        {% endblock mainmenu %}
         {% block content %}
 
-        {% endblock content %}
+        {% endblock %}
     </body>
 </html>

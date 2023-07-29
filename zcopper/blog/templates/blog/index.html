@@ -1,6 +1,8 @@
-{% extends 'blog/base.html' %}
-
+{% extends "blog/base.html" %}
 {% block content %}
-<h1>{{ title }}</h1>
-<p>пипец</p>
-{% endblock  %}
+    {% for p in posts %}
+    <h2>{{ p.title }}</h2>
+    <p>{{ p.post_text }}</p>
+    <h3 align="right">{{ p.post_author }}</h3>
+    {% endfor %}
+{% endblock %}

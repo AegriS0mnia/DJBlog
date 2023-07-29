@@ -1,0 +1,5 @@
+body, nav {
+    font-family: 'Arial';
+    margin: 5% 5%;
+    background:  url('blog/static/blog/images/main_back.jpg');
+}
