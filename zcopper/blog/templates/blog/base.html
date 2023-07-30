@@ -1,25 +1,32 @@
-{%  load static %}
 <!DOCTYPE html>
+{%  load static %}
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <title>!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet"  type="text/css" href="{% static 'blog/css/styles.css' %}">
     </head>
     {%block mainmenu%}
     <header>
-        <div align="center">
+        <div class="topnav">
             <nav>
-            <a href="#">Главная</a>
-            <a href="#">Блог</a>
-            <a align="right "href="#">Войти</a>
+            {% for  m in menu %}
+                {% if not forloop.last %}
+                    <a href="{% url  m.url_name %}">{{ m.title }}</a>
+                {% else %}
+                    <a href="{% url  m.url_name %}">{{ m.title }}</a>
+                {% endif %}
             </nav>
+            {% endfor %}
         </div>
     </header>
     {% endblock mainmenu %}
     <body>
+        <div class="maincontent">
         {% block content %}
 
         {% endblock %}
+        </div>
+
     </body>
 </html>

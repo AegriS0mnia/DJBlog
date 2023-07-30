@@ -1,8 +1,9 @@
 {% extends "blog/base.html" %}
+{% load static%}
 {% block content %}
     {% for p in posts %}
-    <h2>{{ p.title }}</h2>
-    <p>{{ p.post_text }}</p>
-    <h3 align="right">{{ p.post_author }}</h3>
+        <h2>{{ p.title }}</h2>
+        <p>{{ p.post_text|linebreaks|truncatewords:150 }}</p>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
     {% endfor %}
 {% endblock %}
