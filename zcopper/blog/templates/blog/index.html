@@ -2,8 +2,14 @@
 {% load static%}
 {% block content %}
     {% for p in posts %}
+        <p class="category">Категория: {{ p.cat }}</p>
         <h2>{{ p.title }}</h2>
         <p>{{ p.post_text|linebreaks|truncatewords:150 }}</p>
-        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+
+        <div class="link-read-post">
+            <a href="{{ p.get_absolute_url }}">Читать пост</a>
+        </div>
+
+
     {% endfor %}
 {% endblock %}

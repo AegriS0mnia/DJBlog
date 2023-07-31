@@ -26,14 +26,14 @@
         <!--  Боковое меню -->
         <div class="sidenav">
             {% if cat_selected == 0 %}
-                <p class="selected">Все категории</p>
+                <p>Все категории</p>
             {% else %}
-                <p><a href="{% url 'home' %}">Все категории</a></p>
+                <a href="{% url 'home' %}">Все категории</a>
             {% endif %}
 
             {% for c in cats %}
                 {% if  c.pk == cat_selected %}
-                    <p class="selected">{{ c.name }}</p>
+                    <p>{{ c.name }}</p>
                 {% else %}
                     <a href="{{ c.get_absolute_url }}">{{c.name}}</a>
                 {% endif %}

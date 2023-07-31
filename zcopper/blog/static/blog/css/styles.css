@@ -10,13 +10,14 @@ body {
 
 .maincontent {
     margin-top: 3%;
+    margin-down: 2%;
     padding-right: 7%;
     padding-left: 10%;
 }
 
 .topnav {
-  margin: 0;
-  paddig: 0;
+   padding-left: 115px;
+   margin: 0;
   overflow: hidden;
   background-color: #333;
 }
@@ -31,23 +32,41 @@ body {
 }
 
 .sidenav {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  z-index: 1;
-  top: 51px;
-  left: 0;
-  background-color: #d6cfbc;
-  overflow-x: hidden;
-  padding-top: 20px;
+    height: 100%;
+    width 250 px;
+    position: fixed;
+    background-color: #ccd4e0;
+
 }
 
 .sidenav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  display: inline;
+   display: block;
+   padding: 14px 16px ;
+   margin-left: auto;
+   margin-right: auto;
+   text-decoration: none;
+   border: 2px solid #7922CC;
+   border-radius: 20px;
+   width: 80px;
 
+}
+
+.sidenav p {
+   display: block;
+   padding: 14px 16px ;
+   text-decoration: none;
+   border: 2px solid #7922CC;
+   border-radius: 20px;
+   width: 80px;
+}
+
+ .link-read-post a {
+    display: block;
+    text-align: right;
+    padding: 14px 16px;
+    text-decoration: none;
+ }
+
+.category {
+    padding: 14px 0;
+}
