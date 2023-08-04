@@ -14,7 +14,6 @@ def pageNotFound(request, exception):
 
 def index(request):
     posts = StandartPost.objects.all()
-
     main_page_context = {'posts': posts, 'menu': menu_buttons, 'title': 'Главная страница',
                          'cat_selected': 0}
 
@@ -50,7 +49,13 @@ def about(request):
 
 
 def add_page(request):
-    form = AddPostForm()
+    if request.method == 'POST':
+        form = AddPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            form.save()
+    else:
+        form = AddPostForm()
     return render(request, 'blog/addpage.html', {'form': form, 'menu': menu_buttons, 'title': 'Добавление статьи'})
 
 

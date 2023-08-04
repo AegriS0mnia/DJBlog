@@ -10,7 +10,7 @@ class StandartPost(models.Model):
     post_text = models.TextField(blank=True, verbose_name='Текст')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания', null=True)
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время обновления', null=True)
-    is_published = models.BooleanField(default=True, verbose_name='Статус публикации')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')
 
     class Meta:

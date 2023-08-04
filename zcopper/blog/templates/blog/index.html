@@ -3,7 +3,7 @@
 {% block content %}
     {% for p in posts %}
     <div class="preview">
-        {% if p.post_header_image %}
+         {% if p.post_header_image %}
         <img class="post-image" src="{{ p.post_header_image.url }}" alt="#">
         {% endif %}
         <p class="category">Категория: {{ p.cat }}</p>
