@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {%  load static %}
+{% load blog_tags %}
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
@@ -25,20 +26,16 @@
         </div>
         <!--  Боковое меню -->
         <div class="sidenav">
+
             {% if cat_selected == 0 %}
                 <p>Все категории</p>
             {% else %}
                 <a href="{% url 'home' %}">Все категории</a>
             {% endif %}
-
-            {% for c in cats %}
-                {% if  c.pk == cat_selected %}
-                    <p>{{ c.name }}</p>
-                {% else %}
-                    <a href="{{ c.get_absolute_url }}">{{c.name}}</a>
-                {% endif %}
-            {% endfor %}
+            {% show_categories '-name' cat_selected %}
         </div>
+
+
 
         <!--Блок с контентом    -->
         <div class="maincontent">

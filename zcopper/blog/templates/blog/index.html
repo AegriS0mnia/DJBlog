@@ -2,6 +2,10 @@
 {% load static%}
 {% block content %}
     {% for p in posts %}
+    <div class="preview">
+        {% if p.post_header_image %}
+        <img class="post-image" src="{{ p.post_header_image.url }}" alt="#">
+        {% endif %}
         <p class="category">Категория: {{ p.cat }}</p>
         <h2>{{ p.title }}</h2>
         <p>{{ p.post_text|linebreaks|truncatewords:150 }}</p>
@@ -9,6 +13,7 @@
         <div class="link-read-post">
             <a href="{{ p.get_absolute_url }}">Читать пост</a>
         </div>
+    </div>
 
 
     {% endfor %}

@@ -1,4 +1,8 @@
 {% extends  'blog/base.html'%}
 {% block content %}
-<h1 align="center">Добавить статью😳</h1>
+<form action="{% url 'add_page' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
 {% endblock %}

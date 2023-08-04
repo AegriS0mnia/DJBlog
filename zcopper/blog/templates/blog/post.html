@@ -1,5 +1,9 @@
-{% extends 'blog/base.html' % }
+{% extends "blog/base.html" %}
 {% block content %}
-    <h1>{{posts.title}}</h1>
-    <p>{{ posts.post_text}}</p>
+    <h1>{{post.title}}</h1>
+    {% if post.post_header_image %}
+    <img class="post-image" src="{{ post.post_header_image.url }}" alt="#">
+    {% endif %}
+
+    <p>{{ post.post_text|linebreaks }}</p>
 {% endblock %}

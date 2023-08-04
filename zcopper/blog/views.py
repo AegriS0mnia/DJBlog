@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from .models import *
+from .forms import *
 
 menu_buttons = [{'title': 'О сайте😵‍💫', 'url_name': 'about'},
                 {'title': 'Главная🤐', 'url_name': 'home'},
@@ -13,30 +14,35 @@ def pageNotFound(request, exception):
 
 def index(request):
     posts = StandartPost.objects.all()
-    cats = Category.objects.all()
 
-    main_page_context = {'posts': posts, 'cats': cats, 'menu': menu_buttons, 'title': 'Главная страница',
+    main_page_context = {'posts': posts, 'menu': menu_buttons, 'title': 'Главная страница',
                          'cat_selected': 0}
 
     return render(request, 'blog/index.html', context=main_page_context)
 
 
-def show_category(request, cat_id):
-    posts = StandartPost.objects.filter(cat_id=cat_id)
-    cats = Category.objects.all()
+def show_category(request, cat_slug):
+    posts = StandartPost.objects.filter(cat__slug=cat_slug)
     if len(posts) == 0:
         raise Http404
 
     category_context = {'posts': posts,
-                        'cats': cats,
                         'menu': menu_buttons,
                         'title': 'Отображение по категориям',
-                         'cat_selected': cat_id}
+                         'cat_selected': cat_slug}
+
     return render(request, 'blog/index.html', category_context)
 
 
-def show_post(request, post_id):
-    return HttpResponse(f"Отображение статьи с номером: {post_id}")
+def show_post(request, post_slug):
+    post = get_object_or_404(StandartPost, slug=post_slug)
+    post_context = {
+        'post': post,
+        'menu': menu_buttons,
+        'title': post.title,
+        'catselected': post.cat_id,
+    }
+    return render(request, 'blog/post.html', context=post_context)
 
 
 def about(request):
@@ -44,7 +50,8 @@ def about(request):
 
 
 def add_page(request):
-    return render(request, 'blog/addpage.html', {'menu': menu_buttons})
+    form = AddPostForm()
+    return render(request, 'blog/addpage.html', {'form': form, 'menu': menu_buttons, 'title': 'Добавление статьи'})
 
 
 def login(request):
