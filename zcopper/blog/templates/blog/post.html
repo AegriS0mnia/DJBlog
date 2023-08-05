@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% block content %}
+    <title>{{ title}} </title>
     <h1>{{post.title}}</h1>
     {% if post.post_header_image %}
     <img class="post-image" src="{{ post.post_header_image.url }}" alt="#">

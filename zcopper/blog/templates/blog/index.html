@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 {% load static%}
 {% block content %}
+    <title>{{ title}} </title>
     {% for p in posts %}
     <div class="preview">
          {% if p.post_header_image %}
