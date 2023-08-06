@@ -84,3 +84,14 @@ body {
     max-width: 250px;
     max-height: 250px;
 }
+
+.pages {
+    display: inline-block;
+    font-size: 25px;
+    margin: 2%;
+}
+
+.pages a {
+    text-align: center;
+}
+

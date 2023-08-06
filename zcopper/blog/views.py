@@ -9,7 +9,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 menu_buttons = [{'title': 'О сайте‍', 'url_name': 'about'},
                 {'title': 'Главная', 'url_name': 'home'},
                 {'title': 'Добавить статью', 'url_name': 'add_page'},
-                {'title': 'Регистрация/Войти', 'url_name': 'login'},
                 ]
 
 
@@ -69,7 +68,16 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
         context.update(c_def)
         return context
 
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'blog/register.html'
+    success_url = reverse_lazy('login')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Регистрация')
+        context.update(c_def)
+        return context
 def login(request):
     return render(request, 'blog/login.html', {'menu': menu_buttons})
 
