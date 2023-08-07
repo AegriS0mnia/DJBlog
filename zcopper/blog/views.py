@@ -1,3 +1,6 @@
+from django.contrib.auth import logout, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.urls import reverse_lazy
@@ -62,11 +65,13 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     template_name = 'blog/addpage.html'
     success_url = reverse_lazy('home')
     login_url = reverse_lazy('home')
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Добавление статьи')
         context.update(c_def)
         return context
+
 
 class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm
@@ -78,13 +83,34 @@ class RegisterUser(DataMixin, CreateView):
         c_def = self.get_user_context(title='Регистрация')
         context.update(c_def)
         return context
-def login(request):
-    return render(request, 'blog/login.html', {'menu': menu_buttons})
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
 
 
-def about(request):
-    return render(request, 'blog/about.html', {'menu': menu_buttons})
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'blog/login.html'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Авторизация')
+        context.update(c_def)
+        return context
 
+def logout_user(request):
+    logout(request)
+    return redirect('login')
+
+class AboutPage(DataMixin, ListView):
+    model = StandartPost
+    template_name = 'blog/about.html'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='О сайте')
+        context.update(c_def)
+        return context
 
 def pageNotFound(request, exception):
-    return HttpResponseNotFound('<h1 align="center">Блинб, похоже такой странчки нет🥲</h1>', {'menu': menu_buttons})
+    return HttpResponseNotFound('<h1 align="center">Блинб, похоже такой странички нет🥲</h1>', {'menu': menu_buttons})

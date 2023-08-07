@@ -1,9 +1,16 @@
 {% extends 'blog/base.html' %}
+
 {% block content %}
-<div class="loginform" align="center">
-    <p>Введите логин</p>
-    <input type="text" name="user_login">
-    <p>Введите пароль</p>
-    <input type="password" name="userpasswords">
-</div>
+<h1>{{ title }}</h1>
+<form method="post">
+    {% csrf_token %}
+
+<div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form  %}
+    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {%endfor%}
+    <button type="submit">Войти</button>
+</form>
 {% endblock %}
