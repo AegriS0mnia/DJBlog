@@ -4,8 +4,9 @@
 }
 
 body {
+    background-color: #EBEBEB;
     font-family: 'Arial';
-    background:  url('../images/main_back.jpg');
+
 }
 
 .maincontent {
@@ -17,16 +18,24 @@ body {
 }
 
 .topnav {
-   padding-left: 115px;
-   margin: 0;
+  padding-left: 9em;
+  margin: 0;
   overflow: hidden;
   background-color: #333;
+  height: 4em;
 }
 
 .topnav a {
   float: left;
   color: #f2f2f2;
-  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav span {
+  float: left;
+  color: #f2f2f2;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
@@ -34,64 +43,101 @@ body {
 
 .sidenav {
     height: 100%;
-    width 250 px;
     position: fixed;
-    background-color: #ccd4e0;
+    width: 10em;
+    position: fixed;
+    z-index: 1;
+    top: 4em;
+    left: 0;
+    overflow-x: hidden;
 
 }
 
 .sidenav a {
    display: block;
-   padding: 14px 16px ;
-   margin-left: auto;
-   margin-right: auto;
    text-decoration: none;
-   border: 2px solid #7922CC;
-   border-radius: 20px;
-   width: 80px;
+   margin: 1em;
+   width: 9em;
 
 }
 
 .sidenav p {
    display: block;
-   padding: 14px 16px ;
    text-decoration: none;
-   border: 2px solid #7922CC;
-   border-radius: 20px;
-   width: 80px;
+   margin: 1em;
+   width: 9em;
 }
 
- .link-read-post a {
+.link-read-post {
     display: block;
     text-align: right;
     padding: 14px 16px;
     text-decoration: none;
- }
+}
 
-.category {
-    padding: 14px 0;
+.preview-wrapper {
+
 }
 
 .preview {
+    margin: 1em;
+    width: 90em;
+    height: 20em;
     display: inline-block;
     border 5px sold #eaeaea;
     border-radius: 6px;
 }
 
-.post-image {
-    float: left;
+.preview-image {
+    float:left;
     margin: 10px 10px;
-    max-width: 250px;
-    max-height: 250px;
+    width: 150px;
+    height: auto;
+}
+.preview-text {
+    margin-left: 150px;
+}
+.preview-category{
+    float: right;
+    font-size: 18px;
 }
 
-.pages {
+.preview-title {
+    float:left;
+    font-size: 26px;
+}
+
+.pagination {
     display: inline-block;
-    font-size: 25px;
-    margin: 2%;
+    width: 9em;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
 }
 
-.pages a {
+
+.pagination a {
+    display: block;
+    text-decoration: none;
     text-align: center;
+    width: 2em;
+    background-color: #EDEDED;
+    border: 1px solid #D6D6D6;
+    border-radius: 10px;
+    color: black;
+}
+.pagination span {
+    display: block;
+    text-decoration: none;
+    text-align:center;
+    width: 2em;
+    background-color: #EDEDED;
+    border: 1px solid #D6D6D6;
+    border-radius: 10px;
 }
 
+.authorize {
+    display: inline-block;
+    float: right;
+}

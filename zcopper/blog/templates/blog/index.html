@@ -4,18 +4,16 @@
     <title>{{ title}} </title>
     {% for p in posts %}
     <div class="preview">
+        <span class="preview-title">{{ p.title }}</span>
+        <span class="preview-category">Категория: {{ p.cat }}</span>
+        <br>
+        <br>
          {% if p.post_header_image %}
-        <img class="post-image" src="{{ p.post_header_image.url }}" alt="#">
+        <img class="preview-image"   src="{{ p.post_header_image.url }}" alt="#">
         {% endif %}
-        <p class="category">Категория: {{ p.cat }}</p>
-        <h2>{{ p.title }}</h2>
-        <p>{{ p.post_text|linebreaks|truncatewords:150 }}</p>
+        <p class="preview-text">{{ p.post_text|linebreaks|truncatewords:115 }}</p>
+        <a  class="link-read-post" href="{{ p.get_absolute_url }}">Читать пост</a>
 
-        <div class="link-read-post">
-            <a href="{{ p.get_absolute_url }}">Читать пост</a>
-        </div>
     </div>
-
-
     {% endfor %}
 {% endblock %}

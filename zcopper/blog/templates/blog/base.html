@@ -5,10 +5,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet"  type="text/css" href="{% static 'blog/css/styles.css' %}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     </head>
     <body>
 
-    
+
         <!-- Главное меню  -->
         <div>
             <div class="topnav">
@@ -19,14 +20,13 @@
 
                 </nav>
                 {% if request.user.is_authenticated%}
-                    <span>{{ user.username }} | </span>  <a class="authorize" href="{% url 'logout' %}" > Выйти </a>
+                    <span class="authorize">{{ user.username }} | </span><a class="authorize" href="{% url 'logout' %}" > Выйти </a>
                 {% else %}
-                    <a class="authorize" href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a>
+                    <a class="authorize" href="{% url 'register' %}">Регистрация</a> | <a class="authorize" href="{% url 'login' %}">Войти</a>
                 {% endif %}
             </div>
         </div>
         <!-- Конец главного меню -->
-
 
         <!--  Боковое меню -->
         <div class="sidenav">
@@ -38,21 +38,24 @@
             {% for c in cats %}
             {% if c.standartpost__count > 0%}
                 {% if  c.pk == cat_selected %}
-                    <p>{{ c.name }}</p>
+                  <p>{{ c.name }}</p>
                 {% else %}
                     <a href="{{ c.get_absolute_url }}">{{c.name}}</a>
                 {% endif %}
             {% endif %}
             {% endfor %}
         </div>
-        <!--Конец главного меню -->
+        <!--Конец бокового меню -->
 
         <!--Блок с контентом    -->
         <div class="maincontent">
             {% block content %}
             {% endblock %}
-            <!-- Пагинация-->
-            <nav class="pages">
+        </div>
+        <!-- Конец блока контента  -->
+
+        <!-- Пагинация-->
+        <div class="pagination">
             {% if page_obj.has_other_pages%}
                 {% if page_obj.has_previous %}
                     <a href="?page={{ page_obj.previous_page_number}}">&lt;</a>
@@ -68,10 +71,7 @@
                     <a href="?page={{ page_obj.next_page_number}}">&gt;</a>
                 {% endif %}
             {% endif %}
-            </nav>
         </div>
-        <!-- Конец блока контента  -->
-
 
 
     </body>
