@@ -7,4 +7,20 @@
     {% endif %}
 
     <p>{{ post.post_text|linebreaks }}</p>
+    {% if user.is_authenticated %}
+    <div>
+         <form method="post">
+            {% csrf_token %}
+            <p>{{  comment_form.comment_text }}</p>
+            <button type="submit">Отравить комментарий</button>
+        </form>
+    </div>
+    {% else %}
+    <p>пошёл нахуй</p>
+    {% endif %}
+    {% for comment in post.comments.all %}
+        <p>{{ comment.username }}</p>
+        <p>{{ comment.comment_text }}</p>
+    {% endfor %}
 {% endblock %}
+

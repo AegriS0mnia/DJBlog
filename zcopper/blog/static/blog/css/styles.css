@@ -45,9 +45,10 @@ body {
     height: 100%;
     position: fixed;
     width: 10em;
+    top: 4em;
     position: fixed;
     z-index: 1;
-    top: 4em;
+
     left: 0;
     overflow-x: hidden;
 
@@ -68,36 +69,39 @@ body {
    width: 9em;
 }
 
-.link-read-post {
-    display: block;
-    text-align: right;
-    padding: 14px 16px;
-    text-decoration: none;
-}
 
-.preview-wrapper {
-
-}
 
 .preview {
     margin: 1em;
     width: 90em;
     height: 20em;
-    display: inline-block;
-    border 5px sold #eaeaea;
+    display: block;
+    border: 5px solid #eaeaea;
     border-radius: 6px;
+    position:relative;
+    padding-bottom:50px;
 }
 
 .preview-image {
     float:left;
     margin: 10px 10px;
-    width: 150px;
+    height: 135px;
+    width: 135px;
     height: auto;
 }
+
 .preview-text {
-    margin-left: 150px;
+    float: right;
 }
+
+.read {
+    position: absolute;
+    left: 1335px;
+    bottom: 0px;
+}
+
 .preview-category{
+
     float: right;
     font-size: 18px;
 }
@@ -106,6 +110,9 @@ body {
     float:left;
     font-size: 26px;
 }
+
+
+
 
 .pagination {
     display: inline-block;
@@ -127,6 +134,7 @@ body {
     border-radius: 10px;
     color: black;
 }
+
 .pagination span {
     display: block;
     text-decoration: none;

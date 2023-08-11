@@ -1,11 +1,13 @@
 from django.contrib.auth import logout, login
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.db.models import Count
+from django.shortcuts import redirect, get_object_or_404, render
+from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
-from .forms import *
+from django.views import View
+from django.views.generic import ListView, CreateView
+from .models import StandartPost, Comment, Category
+from .forms import AddPostForm, AddComment, RegisterUserForm, LoginUserForm
 from .utils import DataMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -27,7 +29,7 @@ class BlogHome(DataMixin, ListView):
         return context
 
     def get_queryset(self):
-        return StandartPost.objects.filter(is_published=True)
+        return StandartPost.objects.filter(is_published=True).select_related('cat')
 
 
 class BlogCategory(DataMixin, ListView):
@@ -47,17 +49,27 @@ class BlogCategory(DataMixin, ListView):
         return StandartPost.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
 
-class ShowPost(DataMixin, DetailView):
+class ShowPost(View):
     model = StandartPost
-    template_name = 'blog/post.html'
-    context_object_name = 'post'
-    slug_url_kwarg = 'post_slug'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title=context['post'])
-        context.update(c_def)
-        return context
+    def get(self, request, post_slug, *args, **kwargs):
+        post = get_object_or_404(StandartPost, slug=post_slug)
+        cats = Category.objects.annotate(Count('standartpost'))
+        comment_form = AddComment()
+        return render(request, 'blog/post.html',
+                      context={'post': post, 'comment_form': comment_form, 'cats': cats, 'menu': menu_buttons})
+
+    def post(self, request, post_slug, *args, **kwargs):
+        comment_form = AddComment(request.POST)
+        cats = Category.objects.annotate(Count('standartpost'))
+        if comment_form.is_valid():
+            text = request.POST['comment_text']
+            username = self.request.user
+            post = get_object_or_404(StandartPost, slug=post_slug)
+            comment = Comment.objects.create(post=post, username=username, comment_text=text)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        return render(request, 'blog/post.html',
+                      context={'comment_form': comment_form, 'cats': cats, 'menu': menu_buttons})
 
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
@@ -93,24 +105,29 @@ class RegisterUser(DataMixin, CreateView):
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
     template_name = 'blog/login.html'
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Авторизация')
         context.update(c_def)
         return context
 
+
 def logout_user(request):
     logout(request)
     return redirect('login')
 
+
 class AboutPage(DataMixin, ListView):
     model = StandartPost
     template_name = 'blog/about.html'
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='О сайте')
         context.update(c_def)
         return context
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1 align="center">Блинб, похоже такой странички нет🥲</h1>', {'menu': menu_buttons})

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import StandartPost, Category
+from blog.models import StandartPost, Category, Comment
 
 
 class StandartPostAdmin(admin.ModelAdmin):
@@ -14,6 +14,12 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     prepopulated_fields = {"slug": ("name", )}
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('comment_text', 'time_create')
+    list_display_links = ('comment_text',)
+    search_fields = ('username', )
+
 
 admin.site.register(StandartPost, StandartPostAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Comment, CommentAdmin)
