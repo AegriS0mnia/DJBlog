@@ -11,11 +11,6 @@ from .forms import AddPostForm, AddComment, RegisterUserForm, LoginUserForm
 from .utils import DataMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-menu_buttons = [{'title': 'О сайте‍', 'url_name': 'about'},
-                {'title': 'Главная', 'url_name': 'home'},
-                {'title': 'Добавить статью', 'url_name': 'add_page'},
-                ]
-
 
 class BlogHome(DataMixin, ListView):
     model = StandartPost
@@ -57,7 +52,7 @@ class ShowPost(View):
         cats = Category.objects.annotate(Count('standartpost'))
         comment_form = AddComment()
         return render(request, 'blog/post.html',
-                      context={'post': post, 'comment_form': comment_form, 'cats': cats, 'menu': menu_buttons})
+                      context={'post': post, 'comment_form': comment_form, 'cats': cats})
 
     def post(self, request, post_slug, *args, **kwargs):
         comment_form = AddComment(request.POST)
@@ -69,7 +64,7 @@ class ShowPost(View):
             comment = Comment.objects.create(post=post, username=username, comment_text=text)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         return render(request, 'blog/post.html',
-                      context={'comment_form': comment_form, 'cats': cats, 'menu': menu_buttons})
+                      context={'comment_form': comment_form, 'cats': cats})
 
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
@@ -130,4 +125,4 @@ class AboutPage(DataMixin, ListView):
 
 
 def pageNotFound(request, exception):
-    return HttpResponseNotFound('<h1 align="center">Блинб, похоже такой странички нет🥲</h1>', {'menu': menu_buttons})
+    return HttpResponseNotFound('<h1 align="center">Блинб, похоже такой странички нет🥲</h1>')

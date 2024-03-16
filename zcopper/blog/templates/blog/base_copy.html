@@ -13,55 +13,47 @@
     <body>
 
         <!-- Главное меню  -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <div class="container-fluid">
-                <div class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <a class="nav-link" href="{% url 'about' %}" >О сайте</a>
-                    <a class="nav-link" href="{% url 'home' %}" >Главная</a>
-                    {% if request.user.is_authenticated%}
-                        <a class="nav-link" href="{% url 'add_page' %}" >Добавить статью</a>
-                    {% endif %}
-                </div>
-                <div class="navbar-nav me-right mb-2 mb-lg-0">
-                    {% if request.user.is_authenticated%}
-                        <span class="nav-link">{{ user.username }} | </span><a class="nav-link" href="{% url 'logout' %}" > Выйти </a>
-                    {% else %}
-                        <a class="nav-link" href="{% url 'register' %}">Регистрация</a> | <a class="nav-link" href="{% url 'login' %}">Войти</a>
-                    {% endif %}
-                </div>
+        <div>
+            <div class="topnav">
+                <nav>
+                {% for  m in menu %}
+                        <a href="{% url  m.url_name %}">{{ m.title }}</a>
+                {% endfor %}
+
+                </nav>
+                {% if request.user.is_authenticated%}
+                    <span class="authorize">{{ user.username }} | </span><a class="authorize" href="{% url 'logout' %}" > Выйти </a>
+                {% else %}
+                    <a class="authorize" href="{% url 'register' %}">Регистрация</a> | <a class="authorize" href="{% url 'login' %}">Войти</a>
+                {% endif %}
             </div>
-        </nav>
+        </div>
         <!-- Конец главного меню -->
 
         <!--  Боковое меню -->
-        <nav class="col">
-            <div class="position-start">
-            <div class="container-fluid">
-                {% if cat_selected == 0 %}
-                    <a class="btn btn-primary" aria-disabled="true">Все категории</a>
+        <div class="sidenav">
+            {% if cat_selected == 0 %}
+                <p>Все категории</p>
+            {% else %}
+                <a href="{% url 'home' %}">Все категории</a>
+            {% endif %}
+            {% for c in cats %}
+            {% if c.standartpost__count > 0%}
+                {% if  c.pk == cat_selected %}
+                  <p>{{ c.name }}</p>
                 {% else %}
-                    <a  class="btn btn-primary" href="{% url 'home' %}">Все категории</a>
+                    <a href="{{ c.get_absolute_url }}">{{c.name}}</a>
                 {% endif %}
-                {% for c in cats %}
-                    {% if c.standartpost__count > 0%}
-                        {% if  c.pk == cat_selected %}
-                          <a class="btn btn-primary" aria-disabled="true">{{ c.name }}</a>
-                        {% else %}
-                            <a class="btn btn-primary" href="{{ c.get_absolute_url }}">{{c.name}}</a>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-        </nav>
+            {% endif %}
+            {% endfor %}
+        </div>
         <!--Конец бокового меню -->
 
         <!--Блок с контентом    -->
-        <div class="container-fluid">
-            <div class="maincontent">
+        <div class="maincontent">
             {% block content %}
             {% endblock %}
-            </div>
         </div>
-
         <!-- Конец блока контента  -->
 
         <!-- Пагинация-->
